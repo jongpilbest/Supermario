@@ -10,12 +10,14 @@ import { useEffect } from 'react';
 import * as THREE from 'three';
 import Header from './header/header';
 import background_mario from './assets/background_mario.jpg'
-
+import MenuBar from './header/Menu';
 import Second from './header/Second';
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import {Environment,useGLTF}from "@react-three/drei"
+import {Environment,OrbitControls,useGLTF}from "@react-three/drei"
+
 gsap.registerPlugin(ScrollTrigger);
+
 const CameraWithState = ({mario_ref}) => {
   const { camera } = useThree();
   const [section, setSection] = useState(0);
@@ -142,7 +144,7 @@ export function Model(props) {
   const { nodes, materials } = useGLTF('/untitled.glb')
   return (
     <group {...props} dispose={null}>
-      <group rotation={[Math.PI /2, 0, 0]} position={[0,0,0]} scale={0.05}>
+      <group rotation={[Math.PI /2, 0, 0]} position={[0,0,0]} scale={0.049}>
         <skinnedMesh
           geometry={nodes.Eyeball__MarioEyeMat00.geometry}
           material={materials['MarioEyeMat00.002']}
@@ -199,6 +201,25 @@ export function Model(props) {
   )
 }
 
+const MaRio_box= function(){
+  
+  const gltf1 = useLoader(GLTFLoader, '/mario_box_1.glb')
+  
+  const gltf2 = useLoader(GLTFLoader, '/mario_box_2.glb')
+  
+  const gltf3 = useLoader(GLTFLoader, '/mario_box_3.glb')
+  return(
+    <>
+    <ambientLight></ambientLight>
+    <primitive position={[3,5,-1 ]}  rotation={[0, -Math.PI/1.1, 0]} scale={0.45} object={gltf1.scene} />
+<primitive position={[0,3,-1 ]} rotation={[0, -Math.PI/1.1, 0]} scale={0.45} object={gltf2.scene} />
+     <primitive position={[-3,1,-1 ]}rotation={[0, -Math.PI/1.1, 0]}  scale={0.45} object={gltf3.scene} />
+    
+    </>
+
+  )
+}
+
 
 
 function App() {
@@ -223,13 +244,20 @@ absolute
     w-full
     z-2
 '>
+<MenuBar></MenuBar>
+<Canvas 
 
-<Canvas orthographic camera={{ zoom: 200 }}>
+orthographic camera={{ zoom: 200 }}>
 
-  <Environment preset='studio'></Environment>
+  <Environment preset='studio'
+   environmentIntensity={1}
+   
+   environmentRotation={[1, 0.2, 1]}
+   ></Environment>
 
   <CameraWithState mario_ref={mario_ref}></CameraWithState>
   <Model></Model>
+  <MaRio_box></MaRio_box>
  
  
 </Canvas>

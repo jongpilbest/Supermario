@@ -14,9 +14,9 @@ module.exports = {
     fontSize: {
       '8xl': '12.5rem',
       'xs':'0.8rem',
-      '5xl':'5.5rem',
-      '3xl':'3rem',
-      '2xl':'1.8rem'
+      '5xl':'4.7rem',
+      '3xl':'2rem',
+      '2xl':'1.5rem'
     ,    fontWeight: {
       medium: '580',
     }
